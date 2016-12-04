@@ -16,13 +16,12 @@ node {
 									
 			try {
 				def projects = ["hw_delphi.dproj"] as String[]
-				projects.each {
+				projects.collect {
 					echo "Build: ${it}"
 					bat "msbuild ${it} /v:d /target:build /p:config=Debug"
 				}
 			}
 			catch (err){ 
-					echo err
 					 stage 'Send Notification' 
 					 mail (to: 'christof.hullaert@gmail.com', 
 					 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) has had an error.", 
