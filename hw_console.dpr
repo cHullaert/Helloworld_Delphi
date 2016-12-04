@@ -1,5 +1,7 @@
 program hw_console;
 
+add error in the console
+
 {$APPTYPE CONSOLE}
 
 uses
