@@ -14,13 +14,14 @@ node {
 				 "LANGDIR=FR",
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
 									
+			def projects = ["hw_delphi.dproj"] as String[]
+
+			projects.each {
+				echo "Build: ${it}"
+				bat "msbuild ${it} /v:d /target:build /p:config=Debug"
+			}
+			
 			try {
-				def projects = ["hw_delphi.dproj"] as String[]
-				echo projects[0]
-				projects.collect {
-					echo "Build: ${it}"
-					bat "msbuild ${it} /v:d /target:build /p:config=Debug"
-				}
 			}
 			catch (err){ 
 					 stage 'Send Notification' 
