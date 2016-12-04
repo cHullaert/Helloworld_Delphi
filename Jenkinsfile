@@ -34,7 +34,7 @@ node {
 			def stepsForParallel = [:]
 
 			for (int iProject=0; iProject < projects.size(); iProject++) {
-				def project=${projects[iProject]}
+				def project=projects[iProject]
 				def stepName="building ${projects[iProject]}"
 				
 				stepsForParallel[stepName] = transformIntoStep(s)
