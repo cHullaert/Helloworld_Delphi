@@ -8,7 +8,7 @@ def transformIntoStep(inputString) {
 	// that explicitly, or use { -> } syntax.
 	return {
 		node {
-			bat "msbuild $inputString /v:d /target:build /p:config=Debug"
+			bat "msbuild ${inputString} /v:d /target:build /p:config=Debug"
 		}
 	}
 }
