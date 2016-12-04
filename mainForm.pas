@@ -15,6 +15,8 @@ type
     { Déclarations publiques }
   end;
 
+  faisons rater le build
+
 var
   Form1: TForm1;
 
