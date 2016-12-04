@@ -16,7 +16,7 @@ node {
 									
 			def projects = ["hw_delphi.dproj"] as String[]
 
-			for (int iProject=0; iProject < projects.size(); iProject++)
+			for (int iProject=0; iProject < projects.size(); iProject++) {
 				echo "Build: ${projects[iProject]}"
 				bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
 			}
