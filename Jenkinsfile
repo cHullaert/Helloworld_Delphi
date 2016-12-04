@@ -33,8 +33,7 @@ node {
 						  body: "Some text", 
 						mimeType:'text/html'); 
 					 currentBuild.result = 'FAILURE' 
-				 } 
-			}
+			} 
 		}		
 	}
 }
