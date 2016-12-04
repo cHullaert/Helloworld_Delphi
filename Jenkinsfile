@@ -1,5 +1,19 @@
 #!groovy
 
+// Take the string and echo it.
+def transformIntoStep(inputString) {
+	// We need to wrap what we return in a Groovy closure, or else it's invoked
+	// when this method is called, not when we pass it to parallel.
+	// To do this, you need to wrap the code below in { }, and either return
+	// that explicitly, or use { -> } syntax.
+	return {
+		node {
+			bat "msbuild inputString /v:d /target:build /p:config=Debug"
+		}
+	}
+}
+
+
 node {
 	stage('Build') {
 		echo "helloworld"
@@ -32,19 +46,6 @@ node {
 			// Actually run the steps in parallel - parallel takes a map as an argument,
 			// hence the above.
 			parallel stepsForParallel
-
-			// Take the string and echo it.
-			def transformIntoStep(inputString) {
-				// We need to wrap what we return in a Groovy closure, or else it's invoked
-				// when this method is called, not when we pass it to parallel.
-				// To do this, you need to wrap the code below in { }, and either return
-				// that explicitly, or use { -> } syntax.
-				return {
-					node {
-						bat "msbuild inputString /v:d /target:build /p:config=Debug"
-					}
-				}
-			}
 
 			/*try {
 			}
