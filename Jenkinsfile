@@ -13,19 +13,11 @@ node {
 				 "PATH=C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727;${env.PATH}",
 				 "LANGDIR=FR",
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
-			
-			echo "BDS: ${env.BDS}"
-			echo "BDSCOMMONDIR: ${env.BDSCOMMONDIR}"
-			echo "FrameworkDir: ${env.FrameworkDir}"
-			echo "FrameworkVersion: ${env.FrameworkVersion}"
-			echo "FrameworkSDKDir: ${env.FrameworkSDKDir}"
-			echo "Path: ${env.PATH}"
-			echo "LangDir: ${env.LANGDIR}"
-			echo "AppData: ${env.APPDATA}"
-						
+									
 			try {
 				def projects = ["hw_delphi.dproj"] as String[]
 				projects.each {
+					echo "Build: ${it}"
 					bat "msbuild ${it} /v:d /target:build /p:config=Debug"
 				}
 			}
