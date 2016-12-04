@@ -8,7 +8,17 @@ def transformIntoStep(inputString) {
 	// that explicitly, or use { -> } syntax.
 	return {
 		node {
-			bat "msbuild ${inputString} /v:d /target:build /p:config=Debug"
+			try {
+				bat "msbuild ${inputString} /v:d /target:build /p:config=Debug"
+			}
+			catch (err){ 
+					 stage 'Send Notification' 
+					 mail (to: 'christof.hullaert@gmail.com', 
+					 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) has had an error.", 
+						  body: "Some text", 
+						mimeType:'text/html'); 
+					 currentBuild.result = 'FAILURE' 
+			} 
 		}
 	}
 }
@@ -47,16 +57,6 @@ node {
 			// hence the above.
 			parallel stepsForParallel
 
-			/*try {
-			}
-			catch (err){ 
-					 stage 'Send Notification' 
-					 mail (to: 'christof.hullaert@gmail.com', 
-					 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) has had an error.", 
-						  body: "Some text", 
-						mimeType:'text/html'); 
-					 currentBuild.result = 'FAILURE' 
-			} */
 		}		
 	}
 }
