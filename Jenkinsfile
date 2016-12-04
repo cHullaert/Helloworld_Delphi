@@ -37,10 +37,10 @@ node {
 				def project=projects[iProject]
 				def stepName="building ${projects[iProject]}"
 				
-				stepsForParallel[stepName] = transformIntoStep(s)
+				stepsForParallel[stepName] = transformIntoStep(project)
 				
-				echo "Build: ${projects[iProject]}"
-				bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
+				//echo "Build: ${projects[iProject]}"
+				//bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
 			}
 			
 			// Actually run the steps in parallel - parallel takes a map as an argument,
