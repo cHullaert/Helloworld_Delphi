@@ -22,9 +22,12 @@ node {
 			echo "Path: ${env.PATH}"
 			echo "LangDir: ${env.LANGDIR}"
 			echo "AppData: ${env.APPDATA}"
-			
+						
 			try {
-				bat "msbuild hw_delphi.dproj /v:d /target:build /p:config=Debug"
+				def projects = ["hw_delphi.dproj"] as String[]
+				projects.each {
+					bat "msbuild ${it} /v:d /target:build /p:config=Debug"
+				}
 			}
 			catch (err){ 
 					 stage 'Send Notification' 
