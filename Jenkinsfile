@@ -8,6 +8,7 @@ def transformIntoStep(inputString) {
 	// that explicitly, or use { -> } syntax.
 	return {
 		node {
+			checkout scm
 			bat "msbuild ${inputString} /v:d /target:build /p:config=Debug"
 		}
 	}
@@ -17,7 +18,6 @@ def transformIntoStep(inputString) {
 node {
 	stage('Build') {
 		echo "helloworld"
-		checkout scm
 
 		withEnv(["BDS=C:\\Program Files (x86)\\Embarcadero\\RAD Studio\\7.0",
 				 "BDSCOMMONDIR=C:\\Users\\Public\\Documents\\RAD Studio\\7.0",
