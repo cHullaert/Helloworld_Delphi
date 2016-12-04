@@ -34,7 +34,6 @@ node {
 						mimeType:'text/html'); 
 					 currentBuild.result = 'FAILURE' 
 				 } 
-
 			}
 		}		
 	}
