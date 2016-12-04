@@ -23,7 +23,19 @@ node {
 			echo "LangDir: ${env.LANGDIR}"
 			echo "AppData: ${env.APPDATA}"
 			
-			bat "msbuild hw_delphi.dproj /v:d /target:build /p:config=Debug"
+			try {
+				bat "msbuild hw_delphi.dproj /v:d /target:build /p:config=Debug"
+			}
+			catch (err){ 
+					 stage 'Send Notification' 
+					 mail (to: 'christof.hullaert@gmail.com', 
+					 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) has had an error.", 
+						  body: "Some text", 
+						mimeType:'text/html'); 
+					 currentBuild.result = 'FAILURE' 
+				 } 
+
+			}
 		}		
 	}
 }
