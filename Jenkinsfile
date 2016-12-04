@@ -22,6 +22,8 @@ node {
 			echo "Path: ${env.PATH}"
 			echo "LangDir: ${env.LANGDIR}"
 			echo "AppData: ${env.APPDATA}"
+			
+			bat "msbuild hw_delphi.dproj /v:d /target:build /p:config=Debug"
 		}		
 	}
 }
