@@ -15,18 +15,38 @@ node {
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
 									
 			def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
+			
+			// The map we'll store the parallel steps in before executing them.
+			def stepsForParallel = [:]
 
-			parallel (
-				phase1: { bat "msbuild ${projects[0]} /v:d /target:build /p:config=Debug" },
-				phase2: { bat "msbuild ${projects[1]} /v:d /target:build /p:config=Debug" }
-			)
-   
-			/*for (int iProject=0; iProject < projects.size(); iProject++) {
+			for (int iProject=0; iProject < projects.size(); iProject++) {
+				def project=${projects[iProject]}
+				def stepName="building ${projects[iProject]}"
+				
+				stepsForParallel[stepName] = transformIntoStep(s)
+				
 				echo "Build: ${projects[iProject]}"
 				bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
-			}*/
+			}
 			
-			try {
+			// Actually run the steps in parallel - parallel takes a map as an argument,
+			// hence the above.
+			parallel stepsForParallel
+
+			// Take the string and echo it.
+			def transformIntoStep(inputString) {
+				// We need to wrap what we return in a Groovy closure, or else it's invoked
+				// when this method is called, not when we pass it to parallel.
+				// To do this, you need to wrap the code below in { }, and either return
+				// that explicitly, or use { -> } syntax.
+				return {
+					node {
+						bat "msbuild inputString /v:d /target:build /p:config=Debug"
+					}
+				}
+			}
+
+			/*try {
 			}
 			catch (err){ 
 					 stage 'Send Notification' 
@@ -35,7 +55,7 @@ node {
 						  body: "Some text", 
 						mimeType:'text/html'); 
 					 currentBuild.result = 'FAILURE' 
-			} 
+			} */
 		}		
 	}
 }
