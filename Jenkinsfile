@@ -16,10 +16,15 @@ node {
 									
 			def projects = ["hw_delphi.dproj"] as String[]
 
-			for (int iProject=0; iProject < projects.size(); iProject++) {
+			parallel (
+				phase1: { bat "msbuild ${projects[0]} /v:d /target:build /p:config=Debug" },
+				phase2: { bat "msbuild ${projects[1]} /v:d /target:build /p:config=Debug" }
+			)
+   
+			/*for (int iProject=0; iProject < projects.size(); iProject++) {
 				echo "Build: ${projects[iProject]}"
 				bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
-			}
+			}*/
 			
 			try {
 			}
