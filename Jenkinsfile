@@ -14,7 +14,7 @@ node {
 				 "LANGDIR=FR",
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
 									
-			def projects = ["hw_delphi.dproj"] as String[]
+			def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
 
 			parallel (
 				phase1: { bat "msbuild ${projects[0]} /v:d /target:build /p:config=Debug" },
