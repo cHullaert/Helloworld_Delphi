@@ -16,6 +16,7 @@ node {
 									
 			try {
 				def projects = ["hw_delphi.dproj"] as String[]
+				echo projects[0]
 				projects.collect {
 					echo "Build: ${it}"
 					bat "msbuild ${it} /v:d /target:build /p:config=Debug"
