@@ -22,6 +22,7 @@ node {
 				}
 			}
 			catch (err){ 
+					echo err
 					 stage 'Send Notification' 
 					 mail (to: 'christof.hullaert@gmail.com', 
 					 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) has had an error.", 
