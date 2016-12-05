@@ -1,4 +1,6 @@
 #!groovy
+										
+def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
 
 def transformIntoBuildStep(inputString) {
 	return {
@@ -17,6 +19,22 @@ def transformIntoCleanStep(inputString) {
 	}
 }
 
+def makeProjects(transformMethod) {
+	// The map we'll store the parallel steps in before executing them.
+	def stepsForParallel = [:]
+
+	for (int iProject=0; iProject < projects.size(); iProject++) {
+		def project=projects[iProject]
+		def stepName="building ${projects[iProject]}"
+		
+		stepsForParallel[stepName] = transformMethod(project)
+	}
+	
+	// Actually run the steps in parallel - parallel takes a map as an argument,
+	// hence the above.
+	parallel stepsForParallel
+}
+
 withEnv(["BDS=C:\\Program Files (x86)\\Embarcadero\\RAD Studio\\7.0",
 		 "BDSCOMMONDIR=C:\\Users\\Public\\Documents\\RAD Studio\\7.0",
 		 "FrameworkDir=C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727",
@@ -25,28 +43,13 @@ withEnv(["BDS=C:\\Program Files (x86)\\Embarcadero\\RAD Studio\\7.0",
 		 "PATH=C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727;${env.PATH}",
 		 "LANGDIR=FR",
 		 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
+	
 	node {
 		stage('Clean') {
 		}
 
 		stage('Build') {
-										
-			def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
-			
-			// The map we'll store the parallel steps in before executing them.
-			def stepsForParallel = [:]
-
-			for (int iProject=0; iProject < projects.size(); iProject++) {
-				def project=projects[iProject]
-				def stepName="building ${projects[iProject]}"
-				
-				stepsForParallel[stepName] = transformIntoStep(project)
-			}
-			
-			// Actually run the steps in parallel - parallel takes a map as an argument,
-			// hence the above.
-			parallel stepsForParallel
-
+			makeProjects({project -> transformIntoBuildStep(project)})
 		}
 	}
 }
