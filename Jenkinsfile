@@ -45,6 +45,7 @@ withEnv(["BDS=C:\\Program Files (x86)\\Embarcadero\\RAD Studio\\7.0",
 	
 	node {
 		stage('Clean') {
+			makeProjects({project -> transformIntoCleanStep(project)})
 		}
 
 		stage('Build') {
