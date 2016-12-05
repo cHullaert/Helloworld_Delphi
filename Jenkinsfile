@@ -59,6 +59,7 @@ node {
 				 "LANGDIR=FR",
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
 	
+			// just use the param like a variable in script
 			echo "${SOFTWARE_PROTECTION}"
 				
 			makeProjects({project -> transformIntoBuildStep(project)})
