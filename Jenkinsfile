@@ -9,7 +9,7 @@ def transformIntoStep(inputString) {
 	return {
 		node {
 			checkout scm
-			bat "msbuild ${inputString} /v:d /target:build /p:config=Debug"
+			bat "msbuild ${inputString} /v:d /target:clean /p:config=Debug"
 		}
 	}
 }
@@ -38,9 +38,6 @@ node {
 				def stepName="building ${projects[iProject]}"
 				
 				stepsForParallel[stepName] = transformIntoStep(project)
-				
-				//echo "Build: ${projects[iProject]}"
-				//bat "msbuild ${projects[iProject]} /v:d /target:build /p:config=Debug"
 			}
 			
 			// Actually run the steps in parallel - parallel takes a map as an argument,
