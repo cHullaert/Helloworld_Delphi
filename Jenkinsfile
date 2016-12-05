@@ -16,6 +16,9 @@ def transformIntoStep(inputString) {
 
 
 node {
+	stage('Clean') {
+	}
+
 	stage('Build') {
 		echo "helloworld"
 
