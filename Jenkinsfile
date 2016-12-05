@@ -1,7 +1,5 @@
 #!groovy
 										
-def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
-
 def transformIntoBuildStep(inputString) {
 	return {
 		node {
@@ -22,6 +20,7 @@ def transformIntoCleanStep(inputString) {
 def makeProjects(transformMethod) {
 	// The map we'll store the parallel steps in before executing them.
 	def stepsForParallel = [:]
+	def projects = ["hw_delphi.dproj", "hw_console.dproj"] as String[]
 
 	for (int iProject=0; iProject < projects.size(); iProject++) {
 		def project=projects[iProject]
