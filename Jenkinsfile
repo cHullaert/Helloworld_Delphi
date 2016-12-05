@@ -59,6 +59,9 @@ node {
 				 "LANGDIR=FR",
 				 "APPDATA=C:\\Users\\Christof\\AppData\\Roaming"]) {
 	
+			if(build.buildVariableResolver.resolve("SOFTWARE_PROTECTION"))	
+				echo "build in software protection mode"
+				
 			makeProjects({project -> transformIntoBuildStep(project)})
 		}
 	}
