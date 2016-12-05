@@ -26,7 +26,8 @@ def makeProjects(transformMethod) {
 		def project=projects[iProject]
 		def stepName="building ${projects[iProject]}"
 		
-		stepsForParallel[stepName] = transformMethod(project)
+		//stepsForParallel[stepName] = transformMethod(project)
+		stepsForParallel[stepName] = transformIntoCleanStep(project)
 	}
 	
 	// Actually run the steps in parallel - parallel takes a map as an argument,
@@ -45,11 +46,12 @@ withEnv(["BDS=C:\\Program Files (x86)\\Embarcadero\\RAD Studio\\7.0",
 	
 	node {
 		stage('Clean') {
-			makeProjects({project -> transformIntoCleanStep(project)})
+			makeProjects(null)
+			//makeProjects({project -> transformIntoCleanStep(project)})
 		}
 
 		stage('Build') {
-			makeProjects({project -> transformIntoBuildStep(project)})
+			//makeProjects({project -> transformIntoBuildStep(project)})
 		}
 	}
 }
